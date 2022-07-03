@@ -4,14 +4,6 @@ const MovieTable = ({ movies }) => {
   return (
     <div>
       <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Country</th>
-            <th>Collection</th>
-            <th>Release Date</th>
-          </tr>
-        </thead>
         <tbody>
           {movies.map((movie) => (
             <tr key={movie.id}>

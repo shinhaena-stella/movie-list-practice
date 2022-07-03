@@ -5,22 +5,23 @@ const Search = ({ movies }) => {
   const [list, setList] = useState(movies);
   const [searchKey, setSearchKey] = useState("");
   const [sortKey, setSortKey] = useState("");
+  const [sortDircetion, setSortDircetion] = useState(true);
 
   useEffect(() => {
-    const requestSort = (key) => {
-      let newList = [...list];
-      if (!key) return;
-
-      newList.sort((a, b) => {
-        if (a[key] < b[key]) return -1;
-        if (a[key] > b[key]) return 1;
-        return 0;
-      });
-      setList(newList);
-    };
-
     requestSort(sortKey);
   }, [sortKey, list]);
+
+  const requestSort = (key) => {
+    let newList = [...list];
+    if (!key) return;
+
+    newList.sort((a, b) => {
+      if (a[key] < b[key]) return sortDircetion ? -1 : 1;
+      if (a[key] > b[key]) return sortDircetion ? 1 : -1;
+      return 0;
+    });
+    setList(newList);
+  };
 
   const searchRequest = () => {
     let newList = [...list];
@@ -29,6 +30,14 @@ const Search = ({ movies }) => {
     );
     console.log(newList);
     setList(newList);
+  };
+
+  const getClassNamesFor = (key) => {
+    return sortKey === key
+      ? sortDircetion
+        ? "ascending"
+        : "descending"
+      : undefined;
   };
 
   return (
@@ -50,7 +59,7 @@ const Search = ({ movies }) => {
         <button>Submit</button>
       </form>
 
-      <label htmlFor="sort-select">Sort by </label>
+      {/* <label htmlFor="sort-select">Sort by </label>
       <select
         className="sort-select"
         onChange={(e) => setSortKey(e.target.value)}
@@ -60,8 +69,70 @@ const Search = ({ movies }) => {
         <option value="country">Country</option>
         <option value="collection">Collection</option>
         <option value="releasedOn">Release Date</option>
-      </select>
+      </select> */}
 
+      <table>
+        <thead>
+          <tr>
+            <th>
+              <button
+                onClick={(e) => {
+                  setSortKey("title");
+                  setSortDircetion(() => {
+                    if (sortKey === "title") return !sortDircetion;
+                  });
+                  requestSort(sortKey);
+                }}
+                className={getClassNamesFor("title")}
+              >
+                Title
+              </button>
+            </th>
+            <th>
+              <button
+                onClick={(e) => {
+                  setSortKey("country");
+                  setSortDircetion(() => {
+                    if (sortKey === "country") return !sortDircetion;
+                  });
+                  requestSort(sortKey);
+                }}
+                className={getClassNamesFor("country")}
+              >
+                Country
+              </button>
+            </th>
+            <th>
+              <button
+                onClick={(e) => {
+                  setSortKey("collection");
+                  setSortDircetion(() => {
+                    if (sortKey === "collection") return !sortDircetion;
+                  });
+                  requestSort(sortKey);
+                }}
+                className={getClassNamesFor("collection")}
+              >
+                Collection
+              </button>
+            </th>
+            <th>
+              <button
+                onClick={(e) => {
+                  setSortKey("releasedOn");
+                  setSortDircetion(() => {
+                    if (sortKey === "releasedOn") return !sortDircetion;
+                  });
+                  requestSort(sortKey);
+                }}
+                className={getClassNamesFor("releasedOn")}
+              >
+                Release Date
+              </button>
+            </th>
+          </tr>
+        </thead>
+      </table>
       <MovieTable movies={list} />
     </>
   );
