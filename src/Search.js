@@ -5,7 +5,7 @@ const Search = ({ movies }) => {
   const [list, setList] = useState(movies);
   const [searchKey, setSearchKey] = useState("");
   const [sortKey, setSortKey] = useState("");
-  const [sortDircetion, setSortDircetion] = useState(true);
+  const [sortDirection, setSortDirection] = useState(true);
 
   useEffect(() => {
     requestSort(sortKey);
@@ -16,8 +16,8 @@ const Search = ({ movies }) => {
     if (!key) return;
 
     newList.sort((a, b) => {
-      if (a[key] < b[key]) return sortDircetion ? -1 : 1;
-      if (a[key] > b[key]) return sortDircetion ? 1 : -1;
+      if (a[key] < b[key]) return sortDirection ? -1 : 1;
+      if (a[key] > b[key]) return sortDirection ? 1 : -1;
       return 0;
     });
     setList(newList);
@@ -34,7 +34,7 @@ const Search = ({ movies }) => {
 
   const getClassNamesFor = (key) => {
     return sortKey === key
-      ? sortDircetion
+      ? sortDirection
         ? "ascending"
         : "descending"
       : undefined;
@@ -78,8 +78,8 @@ const Search = ({ movies }) => {
               <button
                 onClick={(e) => {
                   setSortKey("title");
-                  setSortDircetion(() => {
-                    if (sortKey === "title") return !sortDircetion;
+                  setSortDirection(() => {
+                    if (sortKey === "title") return !sortDirection;
                   });
                   requestSort(sortKey);
                 }}
@@ -92,8 +92,8 @@ const Search = ({ movies }) => {
               <button
                 onClick={(e) => {
                   setSortKey("country");
-                  setSortDircetion(() => {
-                    if (sortKey === "country") return !sortDircetion;
+                  setSortDirection(() => {
+                    if (sortKey === "country") return !sortDirection;
                   });
                   requestSort(sortKey);
                 }}
@@ -106,8 +106,8 @@ const Search = ({ movies }) => {
               <button
                 onClick={(e) => {
                   setSortKey("collection");
-                  setSortDircetion(() => {
-                    if (sortKey === "collection") return !sortDircetion;
+                  setSortDirection(() => {
+                    if (sortKey === "collection") return !sortDirection;
                   });
                   requestSort(sortKey);
                 }}
@@ -120,8 +120,8 @@ const Search = ({ movies }) => {
               <button
                 onClick={(e) => {
                   setSortKey("releasedOn");
-                  setSortDircetion(() => {
-                    if (sortKey === "releasedOn") return !sortDircetion;
+                  setSortDirection(() => {
+                    if (sortKey === "releasedOn") return !sortDirection;
                   });
                   requestSort(sortKey);
                 }}
